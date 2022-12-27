@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from './utils/firebase_app'
-import {useNavigate} from "react-router-dom";
+
+import TagDashboard from "./TagDashboard";
 
 const Home = () => {
 
@@ -15,19 +16,11 @@ const Home = () => {
         });
 
     }, [])
-    const navigate = useNavigate()
-
+    if (!auth.currentUser) {
+        return <TagDashboard />
+    }
     return (
-        <section>
-            <button onClick={(e) => {
-                e.preventDefault()
-                navigate('/signin')
-            }}>Sign In</button>
-            <button onClick={(e) => {
-                e.preventDefault()
-                navigate('/signout')
-            }} value={"Sign Out"}>Sign Out</button>
-        </section>
+        <TagDashboard />
     )
 }
 
